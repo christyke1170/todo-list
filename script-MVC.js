@@ -17,9 +17,9 @@
 // }]
 
 const tabs = {
-  All: "ALL",
-  ACTIVE: "ACTIVE",
-  COMPLETED: "COMPLETED",
+  All: 'ALL',
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED',
 };
 
 const model = {
@@ -61,6 +61,7 @@ function removeTodo(id){
 };
 
 function toggleTodo(id){
+  console.log("break");
   const newList = model.todoList.map(todo => {
     if( todo.id === id){
       todo.checked = !todo.checked;
@@ -110,11 +111,20 @@ function handleListClick(e){
     toggleEditing(id, true);
     return;
   }
+  
+  if(el.tagName ==="INPUT" && el.getAttribute('type') === 'checkbox'){
+    const li = el.parentNode;
+    const id = li.getAttribute('data-id');
+    toggleTodo(id);
+    return;
+  }
 }
 
 function handleTabClick(e) {
   const el = e.target;
-  const tabName = el.getAttribute('name');
+  console.log(el);
+  const tabName = el.getAttribute('id');
+  console.log(tabName);
   model.activeTab = tabName;
   updateView();
 }
@@ -147,29 +157,19 @@ function toggleAll(){
   updateView();
 }
 
-function getTodoListize() {
-  let count = 0
-  for(let i = 0; i < model.todoList.length; ++i){
-    if(model.todoList[i].checked == false){
-      count++;
-    }
-  }
-  return count;
-}
-
 function loadEvents(){
   const addButton = document.querySelector("#addButton");
   const clearButton = document.querySelector("#clearButton");
   const checkAllButton = document.querySelector("#checkAllButton");
   const listContainer = document.querySelector(".list-container");
-  //const tabListContainer = document.querySelector(".tab-list");
+  const tabListContainer = document.querySelector(".filters");
   const inputArea = document.querySelector(".input-area");
 
   addButton.addEventListener('click', addTodo);
   clearButton.addEventListener('click', clearAll);
   checkAllButton.addEventListener('click', toggleAll);
   listContainer.addEventListener('click', handleListClick);
-  //tabListContainer.addEventListener('click', handleTabClick);
+  tabListContainer.addEventListener('click', handleTabClick);
   listContainer.addEventListener('keyup', handleListContainerKeyUp);
   inputArea.addEventListener('keyup', handleInputAreaKeyUp);
 }
@@ -182,7 +182,7 @@ function createTaskNode(value, id, checked, editingTodo) {
   const text = document.createElement("span");
   text.innerHTML = value;
 
-  const checkbox = document .createElement("input");
+  const checkbox = document.createElement("input");
   checkbox.setAttribute("type", "checkbox");
   if(checked){
     checkbox.checked = checked;
@@ -223,11 +223,11 @@ function createTaskNode(value, id, checked, editingTodo) {
 }
 
 function updateTaskList(){
-  const listContainer = document.querySelector(".list-container");
-  listContainer.innerHTML = "";
+  const listContainer = getListContainer();
+  listContainer.innerHTML = '';
 
   model.todoList.filter((todo) => {
-    if (model.activeTab === tabs.ALL){
+    if (model.activeTab === tabs.All){
       return true;
     }
     if (model.activeTab === tabs.ACTIVE){
@@ -236,7 +236,8 @@ function updateTaskList(){
     if (model.activeTab === tabs.COMPLETED){
       return todo.checked;
     }
-  }).forEach(todo =>{
+  })
+  .forEach(todo =>{
     const li = createTaskNode(todo.value, todo.id, todo.checked, model.editingTodo);
     listContainer.appendChild(li);
   });
@@ -265,9 +266,6 @@ function updateView() {
   updateTaskList();
   updateCount();
   updateTab();
-  let todoCount = getTodoListize();
-  console.log(todoCount);
-  document.getElementById("strong").innerHTML = todoCount;
   localStorage.setItem("todoList", JSON.stringify(model.todoList));
 };
 

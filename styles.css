@@ -55,6 +55,11 @@ main {
   cursor: pointer;
 }
 
+.edit-icon {
+  display: none;
+  cursor: pointer;
+}
+
 ul li {
   display: flex;
   padding: 1rem;
@@ -72,6 +77,10 @@ ul li span {
 }
 
 ul li:hover .delete-icon {
+  display: block;
+}
+
+ul li:hover .edit-icon {
   display: block;
 }
 
