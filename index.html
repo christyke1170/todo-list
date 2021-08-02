@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TODO list</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+
+  <body>
+    <header>
+        <!--
+            Left header button to toggle all tasks. If any task is not completed, set all tasks to completed. If all tasks are completed, set all to active
+        -->
+      <h1>Todo list</h1>
+    </header>
+    <main>
+      <section class="input-area">        
+        <button class="button" id="checkAllButton">&#10004</button>
+        <input class="text-input" placeholder="What needs to be done?" />
+        <button class="button" id="addButton">Add</button>
+      </section>
+
+      <section>
+        <ul class="list-container">
+          <!-- 
+          <li>
+            <input type="checkbox">
+            <span class="checked">asd</span>
+            <div class="delete-icon">&#10005;</div>
+          </li>
+        -->
+          <!-- <li>
+            <input type="checkbox" />
+            <span>123</span>
+            <div class="delete-icon">&#10005;</div>
+          </li> -->
+          <!-- <li>
+            <input type="checkbox" />
+            <span class="checked">456</span>
+            <div class="delete-icon">&#10005;</div>
+          </li> -->
+        </ul>
+      </section>
+      <footer class="footer" style="display: block;">
+        <span class="todo-count"><strong class= "count">1</strong> items left</span>
+        <ul class="filters">
+          <li>
+            <a href="#/" class="selected">All</a>
+          </li>
+          <li>
+            <a href="#/active" class="">Active</a>
+          </li>
+          <li>
+            <a href="#/completed">Completed</a>
+          </li>
+        </ul>
+        <button class="button" style="display: block;" id="clearButton" >Clear All</button>
+    </main>
+    <script src="script-MVC.js"></script>
+  </body>
+</html>
